@@ -1,28 +1,36 @@
 ActiveAdmin.register User do
-  permit_params :email, :password, :password_confirmation
+  permit_params :name,
+                :email,
+                :password,
+                :password_confirmation
+
+  filter :name_or_email_cont, label: 'Search'
 
   index do
-    selectable_column
-    id_column
     column :email
     column :current_sign_in_at
     column :sign_in_count
     column :created_at
+
     actions
   end
 
-  filter :email
-  filter :current_sign_in_at
-  filter :sign_in_count
-  filter :created_at
-
   form do |f|
-    f.inputs "Admin Details" do
-      f.input :email
-      f.input :password
-      f.input :password_confirmation
+    inputs 'Details' do
+      input :name
+      input :email
+      input :password
+      input :password_confirmation
     end
-    f.actions
+
+    actions
   end
 
+  controller do
+    def show
+      show! do |success, failure|
+        success.html { redirect_to [:edit, resource] }
+      end
+    end
+  end
 end

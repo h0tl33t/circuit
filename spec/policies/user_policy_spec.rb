@@ -10,7 +10,19 @@ RSpec.describe UserPolicy, type: :policy do
   it { expect(subject).to permit_action(:show) }
   it { expect(subject).to permit_action(:new) }
   it { expect(subject).to permit_action(:create) }
-  it { expect(subject).to permit_action(:edit) }
-  it { expect(subject).to permit_action(:update) }
+  it { expect(subject).to forbid_action(:edit) }
+  it { expect(subject).to forbid_action(:update) }
   it { expect(subject).to forbid_action(:destroy) }
+
+  describe "modifying their own user record" do
+    subject { described_class.new(user, user) }
+
+    it { expect(subject).to permit_action(:index) }
+    it { expect(subject).to permit_action(:show) }
+    it { expect(subject).to permit_action(:new) }
+    it { expect(subject).to permit_action(:create) }
+    it { expect(subject).to permit_action(:edit) }
+    it { expect(subject).to permit_action(:update) }
+    it { expect(subject).to forbid_action(:destroy) }
+  end
 end

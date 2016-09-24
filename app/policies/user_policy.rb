@@ -8,11 +8,11 @@ class UserPolicy < ApplicationPolicy
   end
 
   def edit?
-    true
+    user == record
   end
 
   def update?
-    true
+    user == record
   end
 
   def destroy?
