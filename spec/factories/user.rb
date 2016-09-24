@@ -9,5 +9,9 @@ FactoryGirl.define do
         role user_role
       end
     end
+
+    trait :inactive do
+      active false
+    end
   end
 end

@@ -12,6 +12,10 @@ RSpec.describe User, type: :model do
 
   it { should validate_inclusion_of(:role).in_array(User::ROLES) }
 
+  it { should allow_value(true).for(:active) }
+  it { should allow_value(false).for(:active) }
+  it { should_not allow_value(nil).for(:active) }
+
   context "scopes" do
     describe ".volunteer" do
       it { expect(described_class.volunteer).to eq [subject] }
@@ -19,6 +23,18 @@ RSpec.describe User, type: :model do
 
     describe ".leader" do
       it { expect(described_class.leader).to eq [leader] }
+    end
+
+    describe ".active" do
+      let!(:inactive) { create(:user, :inactive) }
+
+      it { expect(described_class.active).to match_array [subject, leader] }
+    end
+
+    describe ".inactive" do
+      let!(:inactive) { create(:user, :inactive) }
+
+      it { expect(described_class.inactive).to match_array [inactive] }
     end
   end
 
@@ -38,5 +54,26 @@ RSpec.describe User, type: :model do
   describe "#leader?" do
     it { expect(subject.leader?).to eq false }
     it { expect(leader.leader?).to eq true }
+  end
+
+  describe "#activate" do
+    let!(:inactive) { create(:user, :inactive) }
+
+    it "changes the users active status to true" do
+      expect { inactive.activate }.to change { inactive.active? }.from(false).to(true)
+    end
+  end
+
+  describe "#deactivate" do
+    it "changes the users active status to false" do
+      expect { subject.deactivate }.to change { subject.active? }.from(true).to(false)
+    end
+  end
+
+  describe "#inactive?" do
+    let!(:inactive) { create(:user, :inactive) }
+
+    it { expect(subject.inactive?).to eq false }
+    it { expect(inactive.inactive?).to eq true }
   end
 end

@@ -15,6 +15,10 @@ class User < ActiveRecord::Base
 
   validates :name, presence: true, uniqueness: true
   validates :role, presence: true, inclusion: { in: ROLES }
+  validates :active, inclusion: { in: [true, false] }
+
+  scope :active,   -> { where(active: true) }
+  scope :inactive, -> { where(active: false) }
 
   slug :name
 
@@ -32,5 +36,17 @@ class User < ActiveRecord::Base
 
   def to_param
     slug
+  end
+
+  def activate
+    update_attributes(active: true)
+  end
+
+  def deactivate
+    update_attributes(active: false)
+  end
+
+  def inactive?
+    !active?
   end
 end

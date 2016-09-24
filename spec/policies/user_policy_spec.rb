@@ -25,4 +25,12 @@ RSpec.describe UserPolicy, type: :policy do
     it { expect(subject).to permit_action(:update) }
     it { expect(subject).to forbid_action(:destroy) }
   end
+
+  describe "when the user is inactive" do
+    let!(:inactive) { create(:user, :inactive) }
+
+    it "raises an error on initialization of the policy" do
+      expect { described_class.new(inactive, record) }.to raise_error(Pundit::NotAuthorizedError)
+    end
+  end
 end
