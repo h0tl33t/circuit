@@ -17,6 +17,8 @@ RSpec.describe User, type: :model do
   it { should_not allow_value(nil).for(:active) }
 
   context "scopes" do
+    let!(:inactive) { create(:user, :inactive) }
+
     describe ".volunteer" do
       it { expect(described_class.volunteer).to eq [subject] }
     end
@@ -26,14 +28,10 @@ RSpec.describe User, type: :model do
     end
 
     describe ".active" do
-      let!(:inactive) { create(:user, :inactive) }
-
       it { expect(described_class.active).to match_array [subject, leader] }
     end
 
     describe ".inactive" do
-      let!(:inactive) { create(:user, :inactive) }
-
       it { expect(described_class.inactive).to match_array [inactive] }
     end
   end

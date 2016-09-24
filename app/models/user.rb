@@ -23,7 +23,7 @@ class User < ActiveRecord::Base
   slug :name
 
   ROLES.each do |role|
-    scope role.downcase, -> { where(role: role) }
+    scope role.downcase, -> { active.where(role: role) }
 
     define_method "#{role.downcase}?" do
       self.role == role
