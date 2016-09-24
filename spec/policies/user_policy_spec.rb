@@ -26,6 +26,18 @@ RSpec.describe UserPolicy, type: :policy do
     it { expect(subject).to forbid_action(:destroy) }
   end
 
+  describe "when the user is a leader" do
+    let(:user) { create(:user, :leader) }
+
+    it { expect(subject).to permit_action(:index) }
+    it { expect(subject).to permit_action(:show) }
+    it { expect(subject).to permit_action(:new) }
+    it { expect(subject).to permit_action(:create) }
+    it { expect(subject).to permit_action(:edit) }
+    it { expect(subject).to permit_action(:update) }
+    it { expect(subject).to forbid_action(:destroy) }
+  end
+
   describe "when the user is inactive" do
     let!(:inactive) { create(:user, :inactive) }
 

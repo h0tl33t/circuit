@@ -14,11 +14,11 @@ class UserPolicy < ApplicationPolicy
   end
 
   def edit?
-    user == record
+    user.leader? || user == record
   end
 
   def update?
-    user == record
+    user.leader? || user == record
   end
 
   def destroy?
