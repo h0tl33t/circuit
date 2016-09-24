@@ -1,6 +1,6 @@
 GIT
   remote: git://github.com/vigetlabs/active_material.git
-  revision: 400400f742c846dd596ed4506ef9b55cfed909cc
+  revision: 4b091bcaa84401cd7aa9f3f9c99ad19884dfd633
   branch: nh-responsive-redesign
   specs:
     active_material (1.4.1)
