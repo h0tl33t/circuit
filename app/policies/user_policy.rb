@@ -1,10 +1,4 @@
 class UserPolicy < ApplicationPolicy
-  def initialize(*args)
-    super
-
-    raise Pundit::NotAuthorizedError if user.inactive?
-  end
-
   def new?
     true
   end
