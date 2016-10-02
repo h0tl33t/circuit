@@ -13,6 +13,9 @@ class User < ActiveRecord::Base
          :trackable,
          :validatable
 
+  has_many :members, dependent: :destroy
+  has_many :groups, through: :members
+
   validates :name, presence: true, uniqueness: true
   validates :role, presence: true, inclusion: { in: ROLES }
   validates :active, inclusion: { in: [true, false] }

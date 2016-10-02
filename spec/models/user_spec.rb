@@ -5,6 +5,9 @@ RSpec.describe User, type: :model do
 
   let!(:leader) { create(:user, :leader, name: 'Phil') }
 
+  it { should have_many(:members) }
+  it { should have_many(:groups).through(:members) }
+
   it { should validate_presence_of(:name) }
   it { should validate_presence_of(:role) }
 

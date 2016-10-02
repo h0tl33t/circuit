@@ -7,6 +7,9 @@ class Group < ActiveRecord::Base
 
   acts_as_list
 
+  has_many :members, dependent: :destroy
+  has_many :users, through: :members
+
   validates :name, presence: true, uniqueness: true
 
   def to_s
