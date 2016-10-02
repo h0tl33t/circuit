@@ -8,6 +8,7 @@ gem 'pg'
 
 # Model/Functionality-Related
 gem 'gastropod'
+gem 'acts_as_list'
 
 # Admin-Related
 gem 'devise'
