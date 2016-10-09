@@ -1,0 +1,5 @@
+en:
+  formtastic:
+    labels:
+    hints:
+      slug: 'The slug will be automatically generated based on the name if this field is left blank.'
