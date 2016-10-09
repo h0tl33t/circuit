@@ -10,6 +10,8 @@ class Group < ActiveRecord::Base
   has_many :members, dependent: :destroy
   has_many :users, through: :members
 
+  scope :by_position, -> { order(:position) }
+
   validates :name, presence: true, uniqueness: true
 
   def to_s
