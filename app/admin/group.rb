@@ -14,11 +14,25 @@ ActiveAdmin.register Group do
       link_to group, [:edit, group]
     end
 
+    column :position
+
     column :users do |group|
       if group.users.any?
         ul do
           group.users.each do |user|
             li link_to user, user
+          end
+        end
+      end
+    end
+
+    column :scheduled_for do |group|
+      sundays = schedule.sundays.select { |sunday| sunday.group == group }
+
+      if sundays.any?
+        ul do
+          sundays.each do |sunday|
+            li sunday.to_date.to_s(:long)
           end
         end
       end
@@ -45,5 +59,10 @@ ActiveAdmin.register Group do
     def find_resource
       Group.find_by!(slug: params[:id])
     end
+
+    def schedule
+      @schedule ||= Circuit::Schedule.new
+    end
+    helper_method :schedule
   end
 end
